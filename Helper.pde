@@ -1,10 +1,18 @@
 class Helper {
   PFont font;
+
+  int lastDebounced = 0;
+  int refreshSpeed = 500;
   Helper() { 
-    font = createFont("Circular Std",16,true); // STEP 2 Create Font
+    font = createFont("Menlo",12,true); // STEP 2 Create Font
   }
   
   void debugText(String text) {
+    int currentTime = millis();
+    if (currentTime < lastDebounced + refreshSpeed) {
+      return;
+    }
+    lastDebounced = currentTime;
     // draw rectangle at bottom of screen
     fill(0);
     noStroke();
@@ -12,8 +20,8 @@ class Helper {
     
     // select text color
     fill(100);
-    textFont(font,16);
+    textFont(font,12);
     
-    text(text, 5, height - 10);  
+    text(text, 5, height - 13);  
   }
 }
