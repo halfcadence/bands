@@ -24,6 +24,9 @@ class CurveDrawer {
   PFont font; // font for debugging
   
   float volumeScore;
+  
+  ArrayList<Curve> curveMemory = new ArrayList<Curve>();
+
   CurveDrawer(float[] seeds, float maxScore) { 
     this.maxScore = maxScore;
     neteja();
