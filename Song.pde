@@ -21,7 +21,12 @@ class Song {
   }
   
   void pause() {
-    player.pause();
+    if (player.isPlaying()) {
+      player.pause();
+    }
+    else {
+      player.loop();
+    }
   }
   
   int position() {

@@ -1,11 +1,12 @@
 class Helper {
-  PFont font;
-
+  PFont debugFont;
+  PFont mainFont;
   long lastDebounced = 0;
   int refreshSpeed = 500;
   String text;
   Helper() { 
-    font = createFont("Menlo",12,true); // STEP 2 Create Font
+    debugFont = createFont("Menlo",12,true); // STEP 2 Create Font
+    mainFont = createFont("Circular Std Bold", 50 ,true); // STEP 2 Create Font
   }
   
   void debugText(String text) {
@@ -19,6 +20,18 @@ class Helper {
       drawText();
     }
   }
+  void drawTitle(int darkness) {
+    // select text color
+    fill(darkness);
+    textFont(mainFont,50);
+    
+    pushMatrix();
+    translate(width / 2, height / 2);
+    textAlign(CENTER);
+
+    text("discography 2016", 0, 0);
+    popMatrix();
+  }
   private void drawText() {
     // draw rectangle at bottom of screen
     fill(0);
@@ -27,8 +40,10 @@ class Helper {
     
     // select text color
     fill(100);
-    textFont(font,12);
+    textFont(debugFont,12);
+    textAlign(LEFT);
     
+    println("drawing text: " + text);
     text(text, 5, height - 13);  
   }
 }
