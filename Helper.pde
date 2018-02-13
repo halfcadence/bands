@@ -1,18 +1,25 @@
 class Helper {
   PFont font;
 
-  int lastDebounced = 0;
+  long lastDebounced = 0;
   int refreshSpeed = 500;
+  String text;
   Helper() { 
     font = createFont("Menlo",12,true); // STEP 2 Create Font
   }
   
   void debugText(String text) {
-    int currentTime = millis();
+    long currentTime = millis();
     if (currentTime < lastDebounced + refreshSpeed) {
-      return;
+      drawText();
     }
-    lastDebounced = currentTime;
+    else {
+      lastDebounced = currentTime;
+      this.text = text;
+      drawText();
+    }
+  }
+  private void drawText() {
     // draw rectangle at bottom of screen
     fill(0);
     noStroke();

@@ -20,6 +20,18 @@ class Song {
     player.play(location);
   }
   
+  void pause() {
+    player.pause();
+  }
+  
+  int position() {
+    return player.position();
+  }
+  
+  void loop() {
+    player.loop();
+  }
+  
   boolean isPlaying() {
     return player.isPlaying();
   }

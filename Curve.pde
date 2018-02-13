@@ -4,7 +4,7 @@ class Curve {
   float hue;
   float opacity;
   
-  Curve(xStart, yStart, xEnd, yEnd, x1, y1, x2, y2, hue, opacity) {
+  Curve(float xStart, float yStart, float x1, float y1, float x2, float y2, float xEnd, float yEnd, float hue, float opacity) {
     this.xStart = xStart;
     this.yStart = yStart;
     this.xEnd = xEnd;
@@ -15,5 +15,18 @@ class Curve {
     this.y2 = y2;
     this.hue = hue;
     this.opacity = opacity;
+  }
+  
+  float[] getBezier() {
+    float[] bezier = {xStart, yStart, x1, y1, x2, y2, xEnd, yEnd};
+    return bezier;
+  }
+  
+  float getHue() {
+    return hue;
+  }
+  
+  float getOpacity() {
+    return opacity;
   }
 }

@@ -3,45 +3,100 @@ import ddf.minim.analysis.*;
 import ddf.minim.spi.*;
 
 Minim minim; // audio package
-Song song; // song controller
-
+Song[] album; // song controller
+int currentSong;
+final int numSongs = 3;
 CurveDrawer drawer; // CurveDrawer drawing object
 Helper helper;
 
+enum Mode {PLAY, PAUSE};
+Mode currentMode;
+
 void setup()
 {
-  size(750,450);
-  //fullScreen();
+  // setup the screen
+  size(960,540);
+  // fullScreen();
   smooth();
-  minim = new Minim(this); // allow minim to load files from data directory
   colorMode(HSB, 100);
+
+  minim = new Minim(this); // allow minim to load files from data directory
+  currentMode = Mode.PLAY;
+  // initialize album
+  album = new Song[numSongs];
+  album[0] = new Song("01 lonely boy with a toy ukulele.mp3");
+  album[1] = new Song("02 i stand alone in this empty hall.mp3");
+  album[2] = new Song("03 memories of ourselves with each other (ft.basil).mp3");
+  //album[3] = new Song("04 again.mp3");
+  //album[4] = new Song("05 HOGGINTHEGAME.mp3");
+  //album[5] = new Song("06 i sat with you with cigarettes and beer looking at the stars.mp3");
+  //album[6] = new Song("07 octn,tomppa - this time.mp3");
   
-  song = new Song("03 memories of ourselves with each other (ft.basil).mp3");
-  song.play(80000);
-  drawer = new CurveDrawer(song.getSeeds(), song.getMaxVolume());
+  currentSong = 0;
+  drawer = new CurveDrawer(album[currentSong].getSeeds(), album[currentSong].getMaxVolume());
+  album[currentSong].play(0);
   helper = new Helper();
 }
 
 void draw()
 {
-  keepSongPlaying();
-  song.update();
-  drawer.setVolumeScore(song.getVolumeScore());
-  drawer.update();
+  keepTrackPlaying();
+  if (currentMode == Mode.PLAY) {
+    album[currentSong].update();
+    drawer.setVolumeScore(album[currentSong].getVolumeScore());
+    drawer.update();
+  }
 }
 
-void keepSongPlaying() {
-  if (!song.isPlaying()) {
-    song.play(0);
-    background(100);
+void keepTrackPlaying() {
+  if (currentMode == Mode.PLAY && !album[currentSong].isPlaying()) {
+    switchToTrack(++currentSong % numSongs);
   }
+}
+
+void switchToTrack(int trackNum) {
+  album[currentSong].pause();
+  currentSong = trackNum;
+  drawer.removeCurrentCurve();
+  drawer.seed(album[currentSong].getSeeds(), album[currentSong].getMaxVolume());
+
+  album[currentSong].play(0);
 }
 
 void keyPressed() {
   switch (key) {
+    case 'm':
+      drawer.modeCycle();
+      return;
     case '9':
-      song.play(song.getLength() / 10 * 9);
+      album[currentSong].play(album[currentSong].getLength() / 10 * 9);
+      return;
+    case 'p':
+      currentMode = (currentMode == Mode.PLAY) ? Mode.PAUSE : Mode.PLAY;
+      if (currentMode == Mode.PAUSE) {
+        album[currentSong].pause();
+        filter(GRAY);
+      } else {
+        album[currentSong].loop();
+        album[currentSong].update();
+        drawer.setVolumeScore(album[currentSong].getVolumeScore());
+        drawer.update();
+      }
+      return;
+    default:
       break;
+  }
+  
+  switch (keyCode) {
+    case RIGHT:
+      switchToTrack((currentSong + 1) % numSongs);
+      return;
+    case LEFT:
+      if (album[currentSong].position() >= 2000)
+        switchToTrack(currentSong);
+      else
+        switchToTrack((currentSong - 1 + numSongs) % numSongs);
+      return;
     default:
       break;
   }
