@@ -50,7 +50,7 @@ void draw()
 
 void keepTrackPlaying() {
   if (currentMode == Mode.PLAY && !album[currentSong].isPlaying()) {
-    switchToTrack(++currentSong % numSongs);
+    switchToTrack((currentSong + 1) % numSongs);
   }
 }
 

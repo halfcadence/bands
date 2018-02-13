@@ -50,7 +50,7 @@ class CurveDrawer {
     opacity = volumeScore <= 0.01 ? 0 : 10; // draw lighter when no music is playing, prevents nasty bands at beg and end...
     float maxConstrainedStore = maxScore / 2;
     volumeScore = constrain(volumeScore, 0, maxConstrainedStore);
-    // speed = map(volumeScore, 0, maxConstrainedStore, 0, .03);
+    speed = map(volumeScore, 0, maxConstrainedStore, 0, .03);
     hue = map(volumeScore, 0, maxConstrainedStore, 0, 10);
     c = cos(angle * speedX);
     s = sin(angle);
