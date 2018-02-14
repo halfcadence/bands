@@ -44,13 +44,13 @@ void setup()
 
   // initialize album
   album = new Song[numSongs];
-  album[0] = new Song("01 lonely boy with a toy ukulele.mp3");
-  album[1] = new Song("02 i stand alone in this empty hall.mp3");
-  album[2] = new Song("03 memories of ourselves with each other (ft.basil).mp3");
-  album[3] = new Song("04 again.mp3");
-  album[4] = new Song("05 HOGGINTHEGAME.mp3");
-  album[5] = new Song("06 i sat with you with cigarettes and beer looking at the stars.mp3");
-  album[6] = new Song("07 octn,tomppa - this time.mp3");
+  album[0] = new Song("harbor/01.mp3");
+  album[1] = new Song("harbor/02.mp3");
+  album[2] = new Song("harbor/03.mp3");
+  album[3] = new Song("harbor/04.mp3");
+  album[4] = new Song("harbor/05.mp3");
+  album[5] = new Song("harbor/06.mp3");
+  album[6] = new Song("harbor/07.mp3");
   
   currentSong = 0;
   drawer = new CurveDrawer(album[currentSong].getSeeds(), album[currentSong].getMaxVolume());
