@@ -6,7 +6,7 @@ class Helper {
   String text;
   Helper() { 
     debugFont = createFont("Menlo",12,true); // STEP 2 Create Font
-    mainFont = createFont("Circular Std Bold", 50 ,true); // STEP 2 Create Font
+    mainFont = createFont("CircularStd-Book", 12 ,true); // STEP 2 Create Font
   }
   
   void debugText(String text) {
@@ -23,13 +23,13 @@ class Helper {
   void drawTitle(int darkness) {
     // select text color
     fill(darkness);
-    textFont(mainFont,50);
+    textFont(mainFont, 24);
     
     pushMatrix();
     translate(width / 2, height / 2);
-    textAlign(CENTER);
+    textAlign(CENTER, CENTER);
 
-    text("discography 2016", 0, 0);
+    text("[ SPACE ]", 0, 0);
     popMatrix();
   }
   private void drawText() {

@@ -36,8 +36,8 @@ class CurveDrawer {
     paused = true;
     debug = false;
     pausedBGOpacity = 0;
+    backgroundColor = 100;
     defaultVariables(); // reset variable defaults
-    refreshBackground();
     seed(seeds, maxScore); // seed drawer with seeds for speedX and speedY, maxScore to scale speed
     
     // size of drawing
@@ -109,7 +109,7 @@ class CurveDrawer {
     curveMemory.clear();
     defaultVariables();
   }
-  
+
   void defaultVariables() {
     angle = 0;
     speed = 0.005;
@@ -124,38 +124,38 @@ class CurveDrawer {
     debug = !debug;
   }
   void refreshBackground() {
-    // slowly erase when paused
-    if (paused) {
-      if (pausedBGOpacity < 100) {
-        pausedBGOpacity += 3;
-        fill(backgroundColor, pausedBGOpacity);
-        rect(0,0,width,height);
-        if (debug) helper.debugText("Paused");
-        if (drawingMode == 0) {
-          helper.drawTitle(0);
-        } else {
-          helper.drawTitle(100);
-        }
-      }
-      return;
-    }
-
     switch (drawingMode) {
       case 0:
         if (backgroundColor < 100) {
           backgroundColor+= 10;
         }
-        background(backgroundColor);
         break;
       case 1:
         if (backgroundColor > 0) {
           backgroundColor -= 10;
         }
-        background(backgroundColor);
         break;
       default:
         background(100);
         break;
+    }
+    
+    if (!paused) {
+      background(backgroundColor);
+      return;
+    }
+    
+    // slowly erase when paused
+    if (pausedBGOpacity < 100) {
+      pausedBGOpacity += 3;
+    }
+    fill(backgroundColor, pausedBGOpacity);
+    rect(0,0,width,height);
+    if (debug) helper.debugText("Paused");
+    if (drawingMode == 0) {
+      helper.drawTitle(0);
+    } else {
+      helper.drawTitle(100);
     }
   }
   
@@ -179,7 +179,9 @@ class CurveDrawer {
   void setVolumeScore(float score) {
     volumeScore = score;
   }
-  
+  void setMode(int mode) {
+    drawingMode = mode;
+  }
   private void debug() {
     if (!debug)
       return;

@@ -29,6 +29,9 @@ class Song {
     }
   }
   
+  void cue(int position) {
+    player.cue(position);
+  }
   int position() {
     return player.position();
   }
